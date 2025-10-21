@@ -1,0 +1,6 @@
+allure-results/*
+Test/*
+Pages/*
+.pytest_cache/*
+Playwright_learning/*
+venv/*

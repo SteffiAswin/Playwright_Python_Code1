@@ -1,0 +1,2 @@
+url,username,password,reward_name,post_title,post_content,poll_question,poll_options,dummy_question,appreciation_receiver_email
+https://pwa.skordev.com/#/login,admin@st.com,pass5,"Dairy Farm $5 QA TESTING 2","AM","Post created by AM","What is your favorite programming language?","Python,Java,JavaScript","dummy",user1@st.com
