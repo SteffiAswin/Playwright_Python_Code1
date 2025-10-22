@@ -19,6 +19,7 @@ def test_pwa_first(data):
         print(data["username"])
         print(data["password"])
         loginPage.pwa_login(data["username"], data["password"])
+        page.screenshot(path="homepage.png", full_page=True)
         page.wait_for_url("https://pwa.skordev.com/#/home")  
         expect(page).to_have_url("https://pwa.skordev.com/#/home")
         dashboard_header = page.get_by_text("Profile")
