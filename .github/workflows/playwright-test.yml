@@ -36,7 +36,9 @@ jobs:
       - name: Run tests
         run: |
           echo "Running tests from path: ${{ github.event.inputs.test_path }}"
+          export PYTHONPATH=$(pwd)       # Add repo root to Python path
           pytest ${{ github.event.inputs.test_path }} --maxfail=1 --disable-warnings -v --html=report.html
+
 
       - name: Upload HTML Test Report
         uses: actions/upload-artifact@v4
