@@ -11,7 +11,9 @@ class pwa_login_page:
         self.password.fill(password)
         # cordinates= self.loginbutton.bounding_box()
         # print(cordinates)
+        self.page.wait_for_timeout(3000)
         self.loginbutton.click()
+        self.page.wait_for_timeout(3000)
         
     def goto(self,url:str):
         self.page.goto(url)    
