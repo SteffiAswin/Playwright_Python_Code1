@@ -21,7 +21,7 @@ def test_pwa_first(data):
         page = context.new_page()
         page.wait_for_timeout(3000);
         loginPage = pwa_login_page(page)
-        loginPage.goto(data["url"])
+        loginPage.goto('https://www.google.co.in')
         print(data["username"])
         print(data["password"])
         loginPage.pwa_login(data["username"], data["password"])
