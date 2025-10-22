@@ -4,7 +4,7 @@ import pytest, csv, time
 from PWA_Pages.pwa_login_page import pwa_login_page
 
 
-def load_csv(path="/Users/apple/Desktop/Playwright_Python/Test_data/test_pwadata.csv"):
+def load_csv(path="/Test_data/test_pwadata.csv"):
     with open(path, newline="") as f:
         reader = csv.DictReader(f)
         return list(reader)
