@@ -31,6 +31,7 @@ def test_pwa_first(data):
         print("SCREENSHOT_BASE64_START")
         print(screenshot_base64)
         print("SCREENSHOT_BASE64_END")
+        page.wait_for_timeout(3000);
         current_url = page.url
         print("Current page URL:", current_url)
         # page.wait_for_url("https://pwa.skordev.com/#/home")  
