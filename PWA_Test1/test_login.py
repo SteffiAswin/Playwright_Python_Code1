@@ -12,8 +12,10 @@ def load_csv(path="./Test_data/test_pwadata.csv"):
 @pytest.mark.parametrize("data", load_csv())
 def test_pwa_first(data):
     with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
+        browser = p.chromium.launch(headless=True)
+        context= browser.new_context()
+        page = context.new_page()
+        page.wait_for_timeout(3000);
         loginPage = pwa_login_page(page)
         loginPage.goto(data["url"])
         print(data["username"])
