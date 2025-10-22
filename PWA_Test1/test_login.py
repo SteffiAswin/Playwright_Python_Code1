@@ -16,6 +16,8 @@ def test_pwa_first(data):
         page = browser.new_page()
         loginPage = pwa_login_page(page)
         loginPage.goto(data["url"])
+        print(data["username"])
+        print(data["password"])
         loginPage.pwa_login(data["username"], data["password"])
         page.wait_for_url("https://pwa.skordev.com/#/home")  
         expect(page).to_have_url("https://pwa.skordev.com/#/home")
