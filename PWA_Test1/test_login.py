@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright, expect, TimeoutError
 import pytest, csv, time
+import base64
 
 from PWA_Pages.pwa_login_page import pwa_login_page
 
