@@ -13,7 +13,10 @@ def load_csv(path="./Test_data/test_pwadata.csv"):
 def test_pwa_first(data):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        context= browser.new_context()
+        context = browser.new_context(
+            record_video_dir="videos/",
+            record_video_size={"width": 1280, "height": 720}
+        )
         page = context.new_page()
         page.wait_for_timeout(3000);
         loginPage = pwa_login_page(page)
@@ -21,7 +24,12 @@ def test_pwa_first(data):
         print(data["username"])
         print(data["password"])
         loginPage.pwa_login(data["username"], data["password"])
-        page.screenshot(path="homepage.png", full_page=True)
+        screenshot_bytes = page.screenshot(full_page=True)
+        screenshot_base64 = base64.b64encode(screenshot_bytes).decode("utf-8")
+        print("SCREENSHOT_BASE64_START")
+        print(screenshot_base64)
+        print("SCREENSHOT_BASE64_END")
+
         # page.wait_for_url("https://pwa.skordev.com/#/home")  
         # expect(page).to_have_url("https://pwa.skordev.com/#/home")
         # dashboard_header = page.get_by_text("Profile")
