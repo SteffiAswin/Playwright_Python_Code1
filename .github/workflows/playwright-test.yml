@@ -1,29 +1,45 @@
+name: Playwright Python Tests (Manual Trigger by File)
+
 on:
-    workflow_dispatch:
-      inputs:
-        test_files:
-          description: "Enter pytest marker (e.g., smoke, regression)"
-          required: true
-          default: "PWA_Test"
+  workflow_dispatch:
+    inputs:
+      test_path:
+        description: "Enter test file or folder to run (e.g., api_tests/test_api.py or api_tests/)"
+        required: true
+        default: "PWA_Test/"
+
 jobs:
-    test:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-python@v5
-          with:
-            python-version: '3.11'
-  
-        - run: |
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
-            python -m playwright install --with-deps
-  
-        - name: Run marked tests
-          run: |
-            if [ -z "${{ github.event.inputs.marker }}" ]; then
-              pytest --maxfail=1 --disable-warnings -v
-            else
-              pytest -m ${{ github.event.inputs.marker }} --maxfail=1 --disable-warnings -v
-            fi
-  
+  test:
+    runs-on: ubuntu-latest
+    name: Run Selected Playwright Tests
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-html playwright
+          python -m playwright install --with-deps
+
+      - name: Show project structure (for confirmation)
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -R
+
+      - name: Run tests
+        run: |
+          echo "Running tests from path: ${{ github.event.inputs.test_path }}"
+          pytest ${{ github.event.inputs.test_path }} --maxfail=1 --disable-warnings -v --html=report.html
+
+      - name: Upload HTML Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Playwright-Test-Report
+          path: report.html
