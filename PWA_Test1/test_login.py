@@ -17,7 +17,6 @@ def test_pwa_first(data):
         context = browser.new_context()
         page = context.new_page()
         page.wait_for_timeout(3000);
-        page.set_default_timeout(600000)
         loginPage = pwa_login_page(page)
         loginPage.goto(data["url"])
         page.wait_for_timeout(30000);
