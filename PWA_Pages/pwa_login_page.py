@@ -17,7 +17,12 @@ class pwa_login_page:
         expect(self.page.locator("#loginId")).to_have_value(username);
         expect(self.page.locator("input[type=\"password\"]")).to_have_value(password)
         self.loginbutton.click()
-        self.page.wait_for_timeout(3000)
+        if self.loginbutton.is_visible():
+            self.loginbutton.click()
+            print("✅ Login button clicked.")
+        else:
+            print("⚠️ Login button not visible.")
+            self.page.wait_for_timeout(3000)
         
     def goto(self,url:str):
         self.page.goto(url)    
