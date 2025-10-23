@@ -25,6 +25,10 @@ def test_pwa_first(data):
         page.wait_for_timeout(3000);
         current_url = page.url
         print("Current page URL:", current_url)
+        page.wait_for_timeout(3000);
+        page.reload()
+        current_url = page.url
+        print("Current page URL:", current_url)
         # page.wait_for_url("https://pwa.skordev.com/#/home")  
         # expect(page).to_have_url("https://pwa.skordev.com/#/home")
         # dashboard_header = page.get_by_text("Profile")
