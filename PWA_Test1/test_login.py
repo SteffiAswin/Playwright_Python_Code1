@@ -29,10 +29,10 @@ def test_pwa_first(data):
         page.reload()
         current_url = page.url
         print("Current page URL:", current_url)
-        # page.wait_for_url("https://pwa.skordev.com/#/home")  
-        # expect(page).to_have_url("https://pwa.skordev.com/#/home")
-        # dashboard_header = page.get_by_text("Profile")
-        # expect(dashboard_header).to_be_visible()
+        page.wait_for_url("https://pwa.skordev.com/#/home")  
+        expect(page).to_have_url("https://pwa.skordev.com/#/home")
+        dashboard_header = page.get_by_text("Profile")
+        expect(dashboard_header).to_be_visible()
         browser.close()
         
         # 
