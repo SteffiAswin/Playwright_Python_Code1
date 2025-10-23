@@ -14,6 +14,8 @@ class pwa_login_page:
         # cordinates= self.loginbutton.bounding_box()
         # print(cordinates)
         self.page.wait_for_timeout(3000)
+        expect(self.page.locator("#loginId")).to_have_value(username);
+        expect(self.page.locator("input[type=\"password\"]")).to_have_value(password)
         self.loginbutton.click()
         self.page.wait_for_timeout(3000)
         
