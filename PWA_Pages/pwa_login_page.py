@@ -4,8 +4,8 @@ class pwa_login_page:
         self.page= page
         # self.username= page.locator("[name='loginId']")
         # self.password= page.locator("[formcontrolname='password']")
-        self.username=page.locator("label", has_text="Username")
-        self.password=page.locator("label", has_text="Password")
+        self.username=page.locator("#loginId")
+        self.password=page.locator("[type='password']")
         self.loginbutton= page.get_by_role("button", name="Login")
         
     def pwa_login(self,username:str,password:str):
