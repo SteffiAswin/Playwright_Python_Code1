@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, Expect
+from playwright.sync_api import Page, Expect, expect
 class pwa_login_page:
     def __init__(self,page:Page):
         self.page= page
