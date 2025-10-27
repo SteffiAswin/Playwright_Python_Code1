@@ -46,8 +46,9 @@ def test_pwa_first(data):
         expected_url = "https://pwa.skordev.com/#/home"
 
         try:
-            page.wait_for_url(expected_url, wait_until="networkidle", timeout=20000)
-            
+            # page.wait_for_url(expected_url, wait_until="networkidle", timeout=20000)
+            current_url = page.url
+            print("Current page URL:", current_url)
             # If the wait passes, assert success
             expect(page).to_have_url(expected_url)
             print("Test passed in headless mode! 🎉")
