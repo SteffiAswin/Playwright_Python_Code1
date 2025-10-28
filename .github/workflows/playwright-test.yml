@@ -14,33 +14,58 @@ jobs:
     name: Run Selected Playwright Tests
 
     steps:
+      # 1️⃣ Checkout your code
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Set up Python 3.11
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest pytest-html playwright
-          python -m playwright install --with-deps
+          playwright install chromium
 
-      - name: Show project structure (for confirmation)
+      # 4️⃣ (Optional but recommended) Log environment and files
+      - name: Show project structure
         run: |
           Write-Host "Current directory: $PWD"
-          Get-ChildItem -Recurse
+          Get-ChildItem -Recurse | Select-Object FullName
 
-      - name: Run tests
+      # 5️⃣ Run Playwright tests (Headed/Headless controlled)
+      - name: Run tests (Headed Mode)
+        env:
+          HEADLESS: "False"   # 👈 Added: switch between True / False
         run: |
           Write-Host "Running tests from path: ${{ github.event.inputs.test_path }}"
-          $env:PYTHONPATH = (Get-Location).Path  # Add repo root to Python path
-          pytest ${{ github.event.inputs.test_path }} --maxfail=1 --disable-warnings -v --html=report.html
+          Write-Host "Headless Mode: $env:HEADLESS"
+          $env:PYTHONPATH = (Get-Location).Path
+          pytest ${{ github.event.inputs.test_path }} `
+            --maxfail=1 `
+            --disable-warnings `
+            -v `
+            --html=report.html
 
+      # 6️⃣ Upload Playwright artifacts
       - name: Upload HTML Test Report
         uses: actions/upload-artifact@v4
         with:
           name: Playwright-Test-Report
           path: report.html
+
+      # 7️⃣ (Optional) Upload videos, screenshots, or traces if you record them
+      - name: Upload Playwright Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            videos/
+            screenshots/
+            trace/
+          if-no-files-found: ignore
