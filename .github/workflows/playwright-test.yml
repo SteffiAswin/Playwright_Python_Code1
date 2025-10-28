@@ -14,11 +14,11 @@ jobs:
     name: Run Selected Playwright Tests
 
     steps:
-      # 1️⃣ Checkout your code
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Set up Python 3.11
+      # 2️⃣ Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -31,19 +31,18 @@ jobs:
           pip install pytest pytest-html playwright
           playwright install chromium
 
-      # 4️⃣ (Optional but recommended) Log environment and files
+      # 4️⃣ Show structure (debug)
       - name: Show project structure
         run: |
           Write-Host "Current directory: $PWD"
           Get-ChildItem -Recurse | Select-Object FullName
 
-      # 5️⃣ Run Playwright tests (Headed/Headless controlled)
+      # 5️⃣ Run Playwright tests
       - name: Run tests (Headed Mode)
         env:
-          HEADLESS: "False"   # 👈 Added: switch between True / False
+          HEADLESS: "False"
         run: |
           Write-Host "Running tests from path: ${{ github.event.inputs.test_path }}"
-          Write-Host "Headless Mode: $env:HEADLESS"
           $env:PYTHONPATH = (Get-Location).Path
           pytest ${{ github.event.inputs.test_path }} `
             --maxfail=1 `
@@ -51,14 +50,16 @@ jobs:
             -v `
             --html=report.html
 
-      # 6️⃣ Upload Playwright artifacts
+      # 6️⃣ Always upload the HTML report
       - name: Upload HTML Test Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Playwright-Test-Report
           path: report.html
+          if-no-files-found: warn
 
-      # 7️⃣ (Optional) Upload videos, screenshots, or traces if you record them
+      # 7️⃣ Always upload recorded videos, screenshots, and traces
       - name: Upload Playwright Artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -68,4 +69,4 @@ jobs:
             videos/
             screenshots/
             trace/
-          if-no-files-found: ignore
+          if-no-files-found: warn
