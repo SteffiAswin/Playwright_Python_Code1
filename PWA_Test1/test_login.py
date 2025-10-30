@@ -123,4 +123,4 @@ def test_pwa_first(data):
                 print(f"🎥 Video recorded at: {video_path}")
 
             if failed_requests:
-                print(f"⚠️ {len(failed_requests)} network requests failed.")
+                print(f"{len(failed_requests)} network requests failed.")
